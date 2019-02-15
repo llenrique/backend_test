@@ -5,3 +5,4 @@
 /share
 pyenv.cfg
 pip-selfcheck.json
+/__pycache__
