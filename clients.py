@@ -57,12 +57,25 @@ def get_total_users():
 
     Endpoint:
         endpoint/users/:start/:end
+
+    Parametros:
         :start debe ser una fecha en formato YYYY-MM-DD
         :end debe ser una fecha en formato YYYY-MM-DD
+
+    Response:
+        La API regresa un objeto JSON que contiene a cada usuario con la
+        siguiente información:
+            el nombre de cada cliente
+            su primer y segundo apellido
+            el uid del cliente
+            su correo electrónico
+            su status (active, false o true)
+            su fecha de creación
     """
     # lista de todos los clientes vacia
     all_client_list = []
 
+    print('Obteniendo lista de clientes')
     for periodo, fecha in anio_dividido_en_cuatrimestres.items():
         # por cada periodo se obtienen la fecha inicial y final
         response = requests.get(
@@ -76,5 +89,45 @@ def get_total_users():
             # se agregan al listado total
             all_client_list.append(item)
 
+    print('Número de clientes {}'.format(len(all_client_list)))
+
     # se regresa el listado de todos los clientes
     return all_client_list
+
+
+def clients_summary(users, movements):
+    u"""Esta función genera el resumen de cada cliente."""
+    print('Relacionando clientes con movimientos, generando resumen')
+    print('...Calculando total de movimientos por cliente')
+    print('...Calculando credit total por cliente')
+    print('...Calculando debit total por cliente')
+    print('...Calculando balance por cliente')
+    all_clients_summary = []
+    for user in users:
+        client_debit_sumary = 0
+        client_credit_sumary = 0
+        movements_counter_by_user = 0
+
+        for move in movements:
+            if move['account'] == user['uid'] and move['amount'] != 0:
+                movements_counter_by_user += 1
+                if move['type'] == 'debit':
+                    client_debit_sumary += move['amount']
+                elif move['type'] == 'credit':
+                    client_credit_sumary += move['amount']
+
+                movements.remove(move)
+
+            clients_summary = {
+                'nombre': user['nombre'],
+                'uid': user['uid'],
+                'records': movements_counter_by_user,
+                'resumen': {
+                    'credit': client_credit_sumary,
+                    'debit': client_debit_sumary,
+                    'balance': client_credit_sumary - client_debit_sumary
+                }
+            }
+
+        all_clients_summary.append(clients_summary)
+    return all_clients_summary
