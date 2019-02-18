@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 def create_summary(clients_summary, general_summary):
     print('Generando resumenes con estructua deseada')
     summary = {
