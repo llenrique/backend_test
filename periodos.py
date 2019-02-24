@@ -1,25 +1,20 @@
-u""".
+# Se divide el año en cuatrimestres
+clientes = {
+    'primer_cuatrimestre': {
+        'start': '2017-01-01',
+        'end': '2017-04-30'
+    },
+    'segundo_cuatrimestre': {
+        'start': '2017-05-01',
+        'end': '2017-08-31'
+    },
+    'tercer_cuatrimestre': {
+        'start': '2017-09-01',
+        'end': '2017-12-31'
+    }
+}
 
-Problema:
-    Obtener un listado de todos los movimientos generales creados en 2018
-    Las fechas deben estarn en formato YYYY-MM-DD
-
-Descripción:
-    Trae un listado de los movimientos que fueron creados entre las fechas
-    de inicio y fin
-
-    Las fechas deben estar en formato YYYY-MM-DD
-
-    Si hay más de 50 registros en el rango de fechas, contesta con la leyenda:
-    "Hay más de 50 resultados" y el status 406
-"""
-
-import os
-import requests
-
-endpoint = os.environ.get('APIURL')
-
-periodos = {
+movimientos = {
     'primer': {
         'start': '2018-01-01',
         'end': '2018-01-13'
@@ -145,37 +140,3 @@ periodos = {
         'end': '2018-12-31',
     }
 }
-
-
-def get_total_movements():
-    u"""
-    Esta función obtiene los movimientos realizados por los clientes en 2018.
-
-
-    """
-    print('Obteniendo movimientos')
-    all_movements_list = []
-
-    for periodo, fecha in periodos.items():
-        response = requests.get(
-            endpoint+'/movements/'+fecha['start']+'/'+fecha['end']
-        ).json()
-
-        # print('periodo {} : {} movimientos'.format(periodo, len(response)))
-
-        for item in response:
-            all_movements_list.append(item)
-
-    print('Número de movimientos {}'.format(len(all_movements_list)))
-
-    return all_movements_list
-
-
-def get_total_for_type(movements, type):
-    print('Calculando total de {}'.format(type))
-    total = 0
-    for item in movements:
-        if(item['type'] == type):
-            total += item['amount']
-    print('{} total: {}'.format(type, total))
-    return total
