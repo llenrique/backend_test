@@ -8,20 +8,10 @@ Fecha: 14/Febrero/2019
 Version: 0.1.0
 """
 
-from periods import period_divisor
+from getters import get_users, get_movements
 from dates_manager import set_date
 from amounts import get_total_amounts
 from summary import summary
-
-
-def get_users(start_date, end_date):
-    result = period_divisor(start_date, end_date, 'users')
-    return result
-
-
-def get_movements(start_date, end_date):
-    result = period_divisor(start_date, end_date, 'movements')
-    return result
 
 
 if __name__ == '__main__':
