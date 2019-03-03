@@ -10,7 +10,7 @@ def host():
     return os.environ.get('APIURL')
 
 
-def make_request(method, uri, start, end):
+def make_request(method, uri, start=0, end=0, json=[]):
     path = '{}/{}/{}/{}'.format(host(), uri, start, end)
     print(path)
     try:

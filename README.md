@@ -12,6 +12,7 @@ $ git clone https://github.com/llenrique/backend_test
 
 $ cd backend_test
 ```
+
 2. exportar las variables de entorno:
 
 ```

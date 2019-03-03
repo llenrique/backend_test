@@ -45,4 +45,4 @@ def create_summary(clients_summary, general_summary):
     with open('balance.json', 'w') as outfile:
         json.dump(summary, outfile, indent=2)
 
-    # return summary
+    return summary
