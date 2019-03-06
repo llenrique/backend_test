@@ -21,6 +21,7 @@ def posts_results(resume):
     r = requests.post(os.environ.get('APIURL')+'/conta/resumen', json=resume)
     print(r.text)
 
+
 if __name__ == '__main__':
     start_date = set_date('start')
     end_date = set_date('end')
