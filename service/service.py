@@ -10,12 +10,12 @@ def host():
     return os.environ.get('APIURL')
 
 
-def make_request(method, uri, start=0, end=0, json=[]):
-    path = '{}/{}/{}/{}'.format(host(), uri, start, end)
-    print(path)
+def make_request(method, uri):
+    path = '{}/{}'.format(host(), uri)
     try:
         response = requests.request(method, path)
         if response.status_code == 200:
+            print("{}  Success API call ".format(path))
             return parse_json(response)
         elif response.status_code == 406:
             return False

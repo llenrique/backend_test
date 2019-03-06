@@ -25,9 +25,11 @@ def period_divisor(start_date, end_date, point):
         is taken the end date of the first-half and add one day to avoid
         getting the same results of the same end date of the firt-half
     """
+    uri = "{}/{}/{}".format(point, start_date, end_date)
     try:
-        info = service.make_request('GET', point, start_date, end_date)
+        info = service.make_request('GET', uri)
         if info is False:
+            # print("Dividing path")
             diff = end_date - start_date
             days_control = round(diff.days / 2)
             first_half = [start_date, start_date + timedelta(days_control)]

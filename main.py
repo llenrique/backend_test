@@ -12,7 +12,14 @@ from getters import get_users, get_movements
 from dates_manager import set_date
 from amounts import get_total_amounts
 from summary import summary
+from service import service
+import requests
+import os
 
+
+def posts_results(resume):
+    r = requests.post(os.environ.get('APIURL')+'/conta/resumen', json=resume)
+    print(r.text)
 
 if __name__ == '__main__':
     start_date = set_date('start')
@@ -43,3 +50,7 @@ if __name__ == '__main__':
     }
 
     resume = summary.create_summary(users, general_summary)
+
+    # success = service.make_request('POST', 'conta/resumen', json=resume)
+
+    posts_results(resume)
