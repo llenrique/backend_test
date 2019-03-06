@@ -6,3 +6,6 @@
 pyenv.cfg
 pip-selfcheck.json
 /__pycache__
+/env
+*.json
+/__pycache__

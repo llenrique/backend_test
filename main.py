@@ -1,43 +1,45 @@
 u"""
-Examen de candidato para Resuelve tu deuda.
+Examen de candidato backend de Resuelve tu deuda.
 
 Autor: Enrique López
 Email: llenriquelopez@gmail.com
 Fecha: 14/Febrero/2019
 
-Version: 0.0.1
+Version: 0.1.0
 """
 
-import movements
-import clients
-import summary
-import os
-import requests
-
-
-def posts_results(resume):
-    r = requests.post(os.environ.get('APIURL')+'/conta/resumen', json=resume)
-    print(r.text)
+from getters import get_users, get_movements
+from dates_manager import set_date
+from amounts import get_total_amounts
+from summary import summary
 
 
 if __name__ == '__main__':
-    total_clients = clients.get_total_users()
+    start_date = set_date('start')
+    end_date = set_date('end')
 
-    total_movements = movements.get_total_movements()
+    users = get_users(start_date, end_date)
 
-    total_debit = movements.get_total_for_type(total_movements, 'debit')
-    total_credit = movements.get_total_for_type(total_movements, 'credit')
-    balance = total_credit + total_debit
+    print('Users found: {}'.format(len(users)))
+
+    start_date = set_date('start')
+    end_date = set_date('end')
+
+    movements = get_movements(start_date, end_date)
+
+    print('Movements found: {}'.format(len(movements)))
+
+    users = summary.clients_summary(users, movements)
+
+    total_credit, total_debit = get_total_amounts(movements)
+
+    balance = total_credit - total_debit
 
     general_summary = {
         'total_debit': total_debit,
         'total_credit': total_credit,
         'balance': balance,
-        'total_movements': len(total_movements)
+        'total_movements': len(movements)
     }
 
-    clients_summary = clients.clients_summary(total_clients, total_movements)
-
-    resume = summary.create_summary(clients_summary, general_summary)
-
-    posts_results(resume)
+    resume = summary.create_summary(users, general_summary)
