@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     users = summary.clients_summary(users, movements)
 
-    total_credit, total_debit = get_total_amounts(movements)
+    total_debit, total_credit = get_total_amounts(movements)
 
     balance = total_credit - total_debit
 
@@ -51,7 +51,3 @@ if __name__ == '__main__':
     }
 
     resume = summary.create_summary(users, general_summary)
-
-    # success = service.make_request('POST', 'conta/resumen', json=resume)
-
-    posts_results(resume)

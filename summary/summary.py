@@ -1,5 +1,5 @@
 import json
-
+from service import service
 
 def clients_summary(users, movements):
     all_clients_summary = []
@@ -41,8 +41,9 @@ def create_summary(clients_summary, general_summary):
         'balance': general_summary['balance'],
         'byUser': clients_summary
     }
-    print('Generando archivo de salida balance.json')
-    with open('balance.json', 'w') as outfile:
-        json.dump(summary, outfile, indent=2)
+    post_resume(summary)
 
-    return summary
+
+def post_resume(resume):
+    success = service.make_request('POST', 'conta/resumen', json=resume)
+    print(success)

@@ -10,10 +10,10 @@ def host():
     return os.environ.get('APIURL')
 
 
-def make_request(method, uri):
+def make_request(method, uri, json=None):
     path = '{}/{}'.format(host(), uri)
     try:
-        response = requests.request(method, path)
+        response = requests.request(method, path, json=json)
         if response.status_code == 200:
             print("{}  Success API call ".format(path))
             return parse_json(response)
@@ -27,7 +27,10 @@ def make_request(method, uri):
 
 def parse_json(r):
     try:
-        return r.json()
+        res = r.headers['content-type']
+        if res == "application/json; charset=utf-8":
+            return r.json()
+        else:
+            return r.text
     except json.decoder.JSONDecodeError as j:
-        print('Error: ')
-        print(j)
+        print('Error: {}'.format(j))
