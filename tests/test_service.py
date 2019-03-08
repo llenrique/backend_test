@@ -18,7 +18,7 @@ class TestService(TestCase):
 
     @patch('service.api_service.requests.get')
     def test_service_on_user_fail(self, mock_get):
-        uri = 'users/2017-01-01/2017-12-31'
+        uri = 'users/2017-01-01/2018-12-31'
 
         users_mock = mock_get()
 
@@ -30,7 +30,7 @@ class TestService(TestCase):
 
     @patch('service.api_service.requests.get')
     def test_service_on_movements_fail(self, mock_get):
-        uri = 'users/2017-01-01/2017-12-31'
+        uri = 'movements/2018-01-01/2018-12-31'
 
         users_mock = mock_get()
 
@@ -42,7 +42,7 @@ class TestService(TestCase):
 
     @patch('service.api_service.requests.get')
     def test_service_on_movements_success(self, mock_get):
-        uri = 'users/2017-01-01/2017-01-13'
+        uri = 'movements/2018-01-01/2017-01-13'
 
         users_mock = mock_get()
 

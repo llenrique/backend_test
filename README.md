@@ -47,5 +47,4 @@ $ python3 main.py
 
 ```
 $ nose2 --with-coverage
-$ coverage report --omit="env/*"
 ```
