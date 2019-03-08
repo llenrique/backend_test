@@ -1,5 +1,7 @@
 import json
-from service import service
+from service import api_service
+from periods import parse_json
+
 
 def clients_summary(users, movements):
     all_clients_summary = []
@@ -45,5 +47,6 @@ def create_summary(clients_summary, general_summary):
 
 
 def post_resume(resume):
-    success = service.make_request('POST', 'conta/resumen', json=resume)
+    success = api_service.service_request('POST', 'conta/resumen', json=resume)
+    success = parse_json(success)
     print(success)

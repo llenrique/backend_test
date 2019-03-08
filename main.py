@@ -12,28 +12,14 @@ from getters import get_users, get_movements
 from dates_manager import set_date
 from amounts import get_total_amounts
 from summary import summary
-from service import service
-import requests
-import os
-
-
-def posts_results(resume):
-    r = requests.post(os.environ.get('APIURL')+'/conta/resumen', json=resume)
-    print(r.text)
 
 
 if __name__ == '__main__':
-    start_date = set_date('start')
-    end_date = set_date('end')
-
-    users = get_users(start_date, end_date)
+    users = get_users(set_date('start'), set_date('end'))
 
     print('Users found: {}'.format(len(users)))
 
-    start_date = set_date('start')
-    end_date = set_date('end')
-
-    movements = get_movements(start_date, end_date)
+    movements = get_movements(set_date('start'), set_date('end'))
 
     print('Movements found: {}'.format(len(movements)))
 
