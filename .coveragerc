@@ -1,0 +1,7 @@
+[run]
+omit = env/*
+      amounts.py
+      dates_manager.py
+      getters.py
+      main.py
+      periods.py

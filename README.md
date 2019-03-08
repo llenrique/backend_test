@@ -42,3 +42,10 @@ $ pip3 install -r requirements.txt
 ```
 $ python3 main.py
 ```
+
+## Testing
+
+```
+$ nose2 --with-coverage
+$ coverage report --omit="env/*"
+```
