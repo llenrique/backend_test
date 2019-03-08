@@ -1,31 +1,19 @@
 """Manage periods of time."""
 
 from datetime import timedelta
-from service import api_service
-import json
-
-
-def parse_json(r):
-    try:
-        res = r.headers['content-type']
-        if res == "application/json; charset=utf-8":
-            return r.json()
-        else:
-            return r.text
-    except json.decoder.JSONDecodeError as j:
-        print('Error: {}'.format(j))
+from service import api_service, json_parser
 
 
 def period_divisor(start_date, end_date, point):
     """
     Retrive a period of time and an api point (users/movements).
 
-    if the service return a json object with the start and end dates given,then
-    the function return those values (for users or movements).
+    if the api_service return a json object with the start and end dates given,
+    then the function return those values (for users or movements).
 
     Else, the service cannot get the information between the start and
     end dates. So the period is divided by the half and try to get the info
-    again whit this half of period.
+    again whit this half of period. Then try the same for the next half
 
     Example:
         With the given dates start: 2018-01-01 and end: 2018-07-02 the
@@ -49,7 +37,7 @@ def period_divisor(start_date, end_date, point):
             info = period_divisor(first_half[0], first_half[1], point)
             info += period_divisor(second_half[0], second_half[1], point)
         else:
-            info = parse_json(info)
+            info = json_parser.parse_json(info)
         return info
     except Exception as e:
         print("Error")

@@ -8,9 +8,9 @@ Fecha: 14/Febrero/2019
 Version: 0.1.0
 """
 
-from getters import get_users, get_movements
-from dates_manager import set_date
-from amounts import get_total_amounts
+from performers.getters import get_users, get_movements
+from performers.dates_manager import set_date
+from summary.amounts import get_total_amounts
 from summary import summary
 
 

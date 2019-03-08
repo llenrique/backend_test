@@ -1,6 +1,26 @@
+"""
+Match the users and movementsself and create summaries.
+
+The clients_summary function retrives a list of users and a list of movements.
+Then iterates over each users to find the 'uid' and iterates over the movements
+list to find the 'account' when those values are equals. Then acumulates the
+values 'credit' and 'debit' for each user and increments the variable
+movements_counter_by_user. Finally return a list that contains a summary for
+each client.
+
+
+create_summary function creates a required structure for the post endpoint. It
+retrives the list of the function clients_summary and a general_summary created
+in main file. Finally calls the function for send the result.
+
+post_resume functio try to make a post request to the api_service and print the
+response
+
+"""
+
 import json
 from service import api_service
-from periods import parse_json
+from service import json_parser
 
 
 def clients_summary(users, movements):
@@ -48,5 +68,5 @@ def create_summary(clients_summary, general_summary):
 
 def post_resume(resume):
     success = api_service.service_request('POST', 'conta/resumen', json=resume)
-    success = parse_json(success)
+    success = json_parser.parse_json(success)
     print(success)
