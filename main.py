@@ -15,10 +15,12 @@ from summary import summary
 
 
 if __name__ == '__main__':
+    print('====GET USERS====')
     users = get_users(set_date('start'), set_date('end'))
 
     print('Users found: {}'.format(len(users)))
 
+    print('====GET MOVEMENTS====')
     movements = get_movements(set_date('start'), set_date('end'))
 
     print('Movements found: {}'.format(len(movements)))
