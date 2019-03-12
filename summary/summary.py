@@ -20,7 +20,6 @@ response
 
 import json
 from service import api_service
-from service import json_parser
 
 
 def clients_summary(users, movements):
@@ -68,5 +67,4 @@ def create_summary(clients_summary, general_summary):
 
 def post_resume(resume):
     success = api_service.service_request('POST', 'conta/resumen', json=resume)
-    success = json_parser.parse_json(success)
     print(success)

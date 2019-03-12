@@ -1,7 +1,7 @@
 """Manage periods of time."""
 
 from datetime import timedelta
-from service import api_service, json_parser
+from service import api_service
 
 
 def period_divisor(start_date, end_date, point):
@@ -28,17 +28,13 @@ def period_divisor(start_date, end_date, point):
     uri = "{}/{}/{}".format(point, start_date, end_date)
     try:
         info = api_service.service_request('GET', uri)
-        if info == 406:
-            # print("Dividing path")
+        if info is False:
             diff = end_date - start_date
             days_control = round(diff.days / 2)
             first_half = [start_date, start_date + timedelta(days_control)]
             second_half = [start_date + timedelta(days_control+1), end_date]
             info = period_divisor(first_half[0], first_half[1], point)
             info += period_divisor(second_half[0], second_half[1], point)
-        else:
-            info = json_parser.parse_json(info)
         return info
     except Exception as e:
-        print("Error")
-        print(e)
+        print("Error {}".format(e))

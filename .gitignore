@@ -5,7 +5,6 @@
 /share
 pyenv.cfg
 pip-selfcheck.json
-/__pycache__
 /env
-*/__pycache__
+*/__pycache__/*
 .coverage

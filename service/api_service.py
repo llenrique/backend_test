@@ -18,6 +18,7 @@ Example
 
 """
 import os
+import json
 import requests
 
 
@@ -33,10 +34,20 @@ def service_request(method, uri, json=None):
     try:
         response = requests.request(method, path, json=json)
         if response.status_code == 200:
-            return response
+            return parse_json(response)
         elif response.status_code == 406:
-            return response.status_code
+            return False
         else:
             response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print('Error: {}'.format(e))
+
+
+def parse_json(r):
+    try:
+        if r.text == 'recibido':
+            return r.text
+        else:
+            return r.json()
+    except json.decoder.JSONDecodeError as j:
+        print('Error: {}'.format(j))

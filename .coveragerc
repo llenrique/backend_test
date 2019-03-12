@@ -1,7 +1,11 @@
 [run]
 omit = env/*
-      amounts.py
-      dates_manager.py
-      getters.py
+
+[report]
+omit = env/*
       main.py
-      periods.py
+      tests/*
+      */__init__.py
+
+exclude_lines:
+    if __name__ == .__main__.:

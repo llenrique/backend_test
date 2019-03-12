@@ -1,53 +1,32 @@
 from unittest import TestCase
-from unittest.mock import patch, Mock
 from service import api_service
+import requests_mock
 
 
 class TestService(TestCase):
-    @patch('service.api_service.requests.get')
-    def test_service_on_user_success(self, mock_get):
-        uri = 'users/2017-01-01/2017-01-04'
+    @requests_mock.Mocker()
+    def test_service_on_success(self, mock):
+        user = [{'name': 'Enrique'}]
 
-        users_mock = mock_get()
+        mock.get(
+            requests_mock.ANY,
+            json=user,
+            status_code=200
+        )
 
-        users_mock.return_value.status_code = 200
+        res = api_service.service_request('GET', 'users/2017-01-01/2017-01-14')
 
-        response = api_service.service_request('GET', uri)
+        self.assertEqual(res, user)
 
-        self.assertEqual(response.status_code, 200)
+    @requests_mock.Mocker()
+    def test_service_on_fail(self, mock):
+        response = False
 
-    @patch('service.api_service.requests.get')
-    def test_service_on_user_fail(self, mock_get):
-        uri = 'users/2017-01-01/2018-12-31'
+        mock.get(
+            requests_mock.ANY,
+            status_code=406
+        )
 
-        users_mock = mock_get()
+        res = api_service.service_request('GET', 'users/2017-01-01/2017-12-31')
 
-        users_mock.return_value = 406
-
-        response = api_service.service_request('GET', uri)
-
-        self.assertEqual(response, 406)
-
-    @patch('service.api_service.requests.get')
-    def test_service_on_movements_fail(self, mock_get):
-        uri = 'movements/2018-01-01/2018-12-31'
-
-        users_mock = mock_get()
-
-        users_mock.return_value = 406
-
-        response = api_service.service_request('GET', uri)
-
-        self.assertEqual(response, 406)
-
-    @patch('service.api_service.requests.get')
-    def test_service_on_movements_success(self, mock_get):
-        uri = 'movements/2018-01-01/2017-01-13'
-
-        users_mock = mock_get()
-
-        users_mock.return_value.status_code = 200
-
-        response = api_service.service_request('GET', uri)
-
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(res, response)

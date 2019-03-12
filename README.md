@@ -45,6 +45,9 @@ $ python3 main.py
 
 ## Testing
 
+The next commands will create the total coverage and generate the report
 ```
-$ nose2 --with-coverage
+python3 -m coverage run --source='.' -m unittest discover tests/
+
+coverage report
 ```
